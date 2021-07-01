@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mysite.views import hello, current_datetime, hours_ahead
+from books.views import search_form, search, contact
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', hello),
     path('time/', current_datetime),
     path('time/plus/<offset>/', hours_ahead),
+    path('search-form/', search_form),
+    path('search/', search),
+    path('contact_form/', contact),
 ]
