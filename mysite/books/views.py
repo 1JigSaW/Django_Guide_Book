@@ -35,4 +35,4 @@ def contact(request):
 			return HttpResponseRedirect('/contact/thanks/')
 		else:
 			form = ContactForm(initial={'subject': 'I liked your site'})
-		return render(request, 'contact_form.html', {'form': form})
+	return render(request, 'contact_form.html', locals())
