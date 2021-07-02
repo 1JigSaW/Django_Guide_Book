@@ -4,4 +4,11 @@
 
 {% block content %}
 <p>Now {{ current_date }}.</p>
+{% autoescape off %}
+	Здесь автоэкранирование отключено: {{ data|default:"3 &lt; 2" }}.
+	И здесь тоже: {{ other_data }}
+	{% autoescape on %}
+		Автоэкранирование снова включено: {{ name }}
+{% endautoescape %}
+{% endautoescape %}
 {% endblock %}
