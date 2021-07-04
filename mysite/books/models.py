@@ -1,4 +1,6 @@
 from django.db import models
+from django.http import Http404
+from django.template import TemplateDoesNotExist
 
 class Publisher(models.Model):
 	name = models.CharField(max_length=30)
