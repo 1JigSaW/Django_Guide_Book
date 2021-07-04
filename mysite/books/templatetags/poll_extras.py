@@ -1,5 +1,3 @@
-{% load poll_extras %}
-
 from django import template
 import re
 
