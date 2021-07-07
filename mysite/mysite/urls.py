@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mysite.views import hello, current_datetime, hours_ahead
-from books.views import search_form, search, contact
+from books.views import search_form, search, contact, unruly_passengers_csv, hello_pdf
 from books.models import Publisher, Book, Author
 from django.views.generic.list import ListView
 from mysite.views import author_detail
+# from mysite.feeds import LatestEntries, LatestEntriesByCategory
 
 
 def get_publishers():
@@ -41,6 +42,10 @@ apress_books = {
     'template_name': 'apress_list.html',
 }
 
+# feeds = {
+#     'latest': LatestEntries,
+#     'categories': LatestEntriesByCategory
+# }
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,7 +57,13 @@ urlpatterns = [
     path('contact/', contact),
     path('publishers/', ListView.as_view(), publisher_info),
     path('books/', ListView.as_view(), book_info),
-    path(r'authors/(?P<author_id>\d+', author_detail)
+    path(r'authors/(?P<author_id>\d+', author_detail),
+    path('csv/', unruly_passengers_csv),
+    path('pdf/', hello_pdf),
+    # path(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
+    #     {'sitemaps': sitemaps}),
+    # path('feeds/', 'django.contrib.syndication.views.Feed',
+    #     {'feed_dict': feed})
     # path('about/', direct_to_template, {
     #     'template': 'about.html'
     #     })

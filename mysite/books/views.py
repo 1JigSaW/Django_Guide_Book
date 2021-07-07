@@ -3,6 +3,13 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from books.models import Book
 from django.core.mail import send_mail
 from books.forms import ContactForm
+import csv
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+
+
+UNRULY_PASSENGERS = [146,184,235,200,226,251,299,273,
+281,304,203, 134, 147]
 
 def search_form(request):
 	return render(request, 'search_form.html')
@@ -36,3 +43,23 @@ def contact(request):
 		else:
 			form = ContactForm(initial={'subject': 'I liked your site'})
 	return render(request, 'contact_form.html', locals())
+
+def unruly_passengers_csv(request):
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment;filename=unruly.csv'
+ 
+    writer = csv.writer(response)
+    writer.writerow(['Year','Unruly Airline Passengers'])
+    for (year,num) in zip(range(1995,2006), UNRULY_PASSENGERS):
+        writer.writerow([year,num])
+ 
+    return response
+
+def hello_pdf(request):
+	response = HttpResponse(mimetype='application/pdf')
+	response['Content-Disposition'] = 'attachment; filename=hello.pdf'
+	p = canvas.Canvas(response)
+	p.drawString(100, 100, 'Hello world.')
+	p.showPage()
+	p.save()
+	return response
