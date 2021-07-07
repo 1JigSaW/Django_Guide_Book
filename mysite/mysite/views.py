@@ -3,15 +3,19 @@ from django.http import Http404, HttpResponse
 import datetime
 from books.models import Publisher, Book, Author
 from django.views.generic.list import ListView
+from django.views.decorators.vary import vary_on_headers
+from django.views.decorators.cache import cache_control
 
-
+@vary_on_headers('User-Agent', 'Cookie')
 def hello(request):
     return HttpResponse("Hello world")
 
+@cache_control(private=True)
 def current_datetime(request):
     current_date = datetime.datetime.now()
     return render(request, 'current_datetime.html', locals())
-
+    
+@cache_control(must_revalidate=True, max_age=3600)
 def hours_ahead(request, offset):
     try:
     	offset = int(offset)
