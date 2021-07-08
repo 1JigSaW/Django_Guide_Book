@@ -5,6 +5,7 @@ from books.models import Publisher, Book, Author
 from django.views.generic.list import ListView
 from django.views.decorators.vary import vary_on_headers
 from django.views.decorators.cache import cache_control
+from django.utils.translation import ugettext as _
 
 @vary_on_headers('User-Agent', 'Cookie')
 def hello(request):
@@ -59,3 +60,8 @@ def author_list_plaintext(request):
 #         return direct_to_template(request, template='about/%s.html' % page)
 #     except TemplateDoesNotExist:
 #         raise Http404()
+
+def my_view(request):
+    sentence = 'Welcome to my site.'
+    output = _(sentence)
+    return HttpResponse(output)
